@@ -1,0 +1,63 @@
+.login-container {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    align-items: center;    /* Center items vertically */
+    height: 100vh;          /* Full viewport height */
+}
+
+.form-wrapper {
+    background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+    padding: 30px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* Limit form width */
+}
+
+h2 {
+    font-size: 2.5rem; /* Increase font size */
+    margin-bottom: 20px;
+    color: #333; /* Darker text color for contrast */
+}
+
+form label {
+    display: block;
+    font-size: 1rem; /* Label font size */
+    margin-bottom: 8px;
+    color: #555; /* Slightly muted color */
+    text-align: left; /* Align text to the left */
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Border for input */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+form input:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: #007bff; /* Add a blue border */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle shadow on focus */
+}
+
+form button {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

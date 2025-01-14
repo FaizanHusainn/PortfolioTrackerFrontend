@@ -1,0 +1,107 @@
+/* General Styles */
+.add-stocks-container {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .add-stocks-title {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  .success-message {
+    color: #28a745;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .error-message {
+    color: #ff4d4d;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Table Styles */
+  .modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modern-table th,
+  .modern-table td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .modern-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .modern-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .modern-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Quantity Control */
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .quantity-control button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quantity-control button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Buy Price Input */
+  input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Add Stock Button */
+  .add-stock-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-stock-button:hover {
+    background-color: #218838;
+  }

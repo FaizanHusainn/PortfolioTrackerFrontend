@@ -1,0 +1,83 @@
+/* General Styles */
+.dashboard-container {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.dashboard-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.user-info {
+    margin-bottom: 30px;
+}
+
+.user-details {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-details p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.holdings-section {
+    margin-top: 20px;
+}
+
+.holdings-title {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+/* Table Styles */
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modern-table th,
+.modern-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.modern-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.modern-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.modern-table tr:hover {
+    background-color: #ddd;
+}
+
+/* Error Message */
+.error-message {
+    color: #ff4d4d;
+    text-align: center;
+    margin-top: 20px;
+}
