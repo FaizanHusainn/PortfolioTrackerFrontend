@@ -58,46 +58,53 @@ function AddStocks() {
 
   const handleAddStock = async (uuid, stockname, ticker) => {
     try {
-      // Check if Buy Price is empty
-      if (!buyPrices[uuid]) {
-        alert("Buy Price is a mandatory field. Please enter a value.");
-        return; // Stop execution if Buy Price is empty
-      }
+        // Check if Buy Price is empty
+        if (!buyPrices[uuid]) {
+            alert("Buy Price is a mandatory field. Please enter a value.");
+            return; // Stop execution if Buy Price is empty
+        }
 
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("Authorization token is missing. Please log in.");
-      }
+        const token = localStorage.getItem("token");
+        if (!token) {
+            throw new Error("Authorization token is missing. Please log in.");
+        }
 
-      const username = extractUsernameFromToken(token);
-      if (!username) {
-        throw new Error("Failed to extract username from token.");
-      }
+        const username = extractUsernameFromToken(token);
+        if (!username) {
+            throw new Error("Failed to extract username from token.");
+        }
 
-      const payload = {
-        username,
-        stock: stockname,
-        ticker,
-        quantity: quantities[uuid],
-        buyPrice: buyPrices[uuid],
-      };
+        const payload = {
+            username,
+            stock: stockname,
+            ticker,
+            quantity: quantities[uuid],
+            buyPrice: buyPrices[uuid],
+        };
 
-      await axios.post("http://localhost:8080/holdings", payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+        const response = await axios.post("http://localhost:8080/holdings", payload, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
-      setSuccessMessage(`Stock ${stockname} added successfully!`);
-      setError(null); // Clear any previous errors
+        if (response.data === "Stock added successfully") {
+            setSuccessMessage(`Stock ${stockname} added successfully!`);
+            setError(null); // Clear any previous errors
+        }
     } catch (err) {
-      setError(
-        err.response?.status === 401
-          ? "Unauthorized: Please check your login credentials."
-          : "Failed to add stock. Please try again."
-      );
+        if (err.response && err.response.data && err.response.data.message) {
+            // Handle structured error response
+            setError(err.response.data.message);
+        } else {
+            setError(
+                err.response?.status === 401
+                    ? "Unauthorized: Please check your login credentials."
+                    : "Failed to add stock. Please try again."
+            );
+        }
     }
-  };
+};
 
   const extractUsernameFromToken = (token) => {
     try {

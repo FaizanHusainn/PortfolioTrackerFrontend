@@ -117,11 +117,12 @@ function Holdings({ username }) {
           <tr>
             <th>Stock Name</th>
             <th>Ticker</th>
+            <th>Buy Date</th>
             <th>Quantity</th>
             <th>Buy Price</th>
             <th>Realtime Price</th>
             <th>Total Value</th>
-            <th>Remove stocks</th>
+            <th>Remove Stocks</th>
           </tr>
         </thead>
         <tbody>
@@ -129,6 +130,7 @@ function Holdings({ username }) {
             <tr key={holding.id}>
               <td>{holding.stock}</td>
               <td>{holding.ticker}</td>
+              <td>{holding.date}</td>
               <td>{holding.quantity}</td>
               <td>{holding.buyPrice}</td>
               <td>{holding.realtimePrice}</td>

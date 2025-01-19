@@ -16,10 +16,34 @@ function Signup() {
     const [progressMessage, setProgressMessage] = useState('');
     const navigate = useNavigate();
 
+    // Validate PAN (10 characters and uppercase)
+    const validatePAN = (pan) => {
+        return pan.length === 10 && /^[A-Z0-9]+$/.test(pan);
+    };
+
+    // Validate username (no spaces)
+    const validateUsername = (username) => {
+        return !username.includes(' ');
+    };
+
     const handleSignup = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setProgressMessage('Creating an account...');
+        setProgressMessage('Creating An Account And Adding Stocks ...');
+
+        // Validate PAN
+        if (!validatePAN(pan)) {
+            setError('PAN must be exactly 10 characters long and contain only uppercase letters and numbers.');
+            setLoading(false);
+            return;
+        }
+
+        // Validate username
+        if (!validateUsername(username)) {
+            setError('Username cannot contain spaces.');
+            setLoading(false);
+            return;
+        }
 
         try {
             // Step 1: Signup the user
@@ -27,7 +51,7 @@ function Signup() {
                 userName: username,
                 password: password,
                 email: email,
-                pan: pan,
+                pan: pan.toUpperCase(), // Convert PAN to uppercase
             });
 
             if (signupResponse.status === 200) {
@@ -37,27 +61,32 @@ function Signup() {
                 localStorage.setItem('token', signupResponse.data);
 
                 // Step 3: Call the stocks API with the username
-                const token = localStorage.getItem('token'); // Retrieve the token
-                const stocksResponse = await axios.post(
-                    `http://localhost:8080/stocks/${username}`,
-                    {}, // Request body (if required)
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`, // Include the token in the headers
-                        },
-                    }
-                );
+                const token = localStorage.getItem('token');
 
-                if (stocksResponse.status === 200) {
-                    setSuccess('Signup successful! Redirecting to the dashboard...');
-                    setTimeout(() => {
-                        navigate('/welcome'); // Redirect to the welcome page
-                    }, 2000); // Wait 2 seconds before redirecting
-                }
+                setSuccess('Signup successful! Redirecting to the dashboard...');
+                setTimeout(() => {
+                    navigate('/welcome'); // Redirect to the welcome page
+                }, 2000);
             }
         } catch (err) {
             console.error('Error during API call:', err.response ? err.response.data : err.message);
-            setError('Signup failed. Please try again.');
+
+            // Handle specific error messages
+            if (err.response && err.response.data) {
+                if (err.response.status === 409) {
+                    // Username already exists
+                    setError('Username already exists. Please choose a different username.');
+                } else if (err.response.data.message === "Alpha Vantage API Limit Exhausted") {
+                    // API limit exhausted
+                    setError('Alpha Vantage API Limit Exhausted. Please try again tomorrow.');
+                } else {
+                    // Other errors
+                    setError(err.response.data.message || 'Signup failed. Please try again.');
+                }
+            } else {
+                // Network or other errors
+                setError('Signup failed. Please try again.');
+            }
         } finally {
             setLoading(false); // Stop loading regardless of success or failure
         }
@@ -70,87 +99,62 @@ function Signup() {
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             height: '100vh',
-            alignContent : 'center',
-            justifyContent : 'center'
-            
+            alignContent: 'center',
+            justifyContent: 'center'
         }}>
-        <div className="Signup-container">
-            <h2>Signup</h2>
-            <form onSubmit={handleSignup}>
-                <div>
-                    <label>Username</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>PAN</label>
-                    <input
-                        type="text"
-                        value={pan}
-                        onChange={(e) => setPan(e.target.value)}
-                        required
-                    />
-                </div>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                {success && <p style={{ color: 'green' }}>{success}</p>}
-                {loading && (
-                    <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                        <CircularProgress /> {/* Circular loader */}
-                        <p>{progressMessage}</p> {/* Progress message */}
+            <div className="Signup-container">
+                <h2>Signup</h2>
+                <form onSubmit={handleSignup}>
+                    <div>
+                        <label>Username</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value.replace(/\s/g, ''))} // Remove spaces
+                            required
+                        />
                     </div>
-                )}
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Processing...' : 'Signup'}
-                </button>
-            </form>
-
-            {/* Temporary button to test the stocks API independently */}
-            {/* <button
-                type="button"
-                onClick={async () => {
-                    try {
-                        const token = localStorage.getItem('token'); // Retrieve the token
-                        const response = await axios.post(
-                            `http://localhost:8080/stocks/${username}`,
-                            {}, // Request body (if required)
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${token}`, // Include the token in the headers
-                                },
-                            }
-                        );
-                        console.log('Stocks API response:', response.data);
-                    } catch (err) {
-                        console.error('Stocks API error:', err.response ? err.response.data : err.message);
-                    }
-                }}
-                style={{ marginTop: '20px' }}
-            >
-                Test Stocks API
-            </button> */}
-        </div>
+                    <div>
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label>PAN</label>
+                        <input
+                            type="text"
+                            value={pan}
+                            onChange={(e) => setPan(e.target.value.toUpperCase())} // Convert to uppercase
+                            maxLength={10} // Limit to 10 characters
+                            required
+                        />
+                    </div>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    {success && <p style={{ color: 'green' }}>{success}</p>}
+                    {loading && (
+                        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                            <CircularProgress /> {/* Circular loader */}
+                            <p>{progressMessage}</p> {/* Progress message */}
+                        </div>
+                    )}
+                    <button type="submit" disabled={loading}>
+                        {loading ? 'Processing...' : 'Signup'}
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }
