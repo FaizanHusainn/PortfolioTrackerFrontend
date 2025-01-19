@@ -71,7 +71,7 @@ function Holdings({ username }) {
           },
         }
       );
-      setPortfolioValue(Number(response.data).toFixed(4)); // Round the value to 4 digits
+      setPortfolioValue(Number(response.data).toFixed(2)); // Round the value to 4 digits
     } catch (err) {
       setError("Failed to calculate portfolio value. Please try again later.");
     } finally {
