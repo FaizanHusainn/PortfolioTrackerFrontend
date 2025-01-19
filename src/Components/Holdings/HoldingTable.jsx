@@ -9,6 +9,7 @@ function Holdings({ username }) {
   const [portfolioValue, setPortfolioValue] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Holding table username : " + username);
@@ -78,7 +79,13 @@ function Holdings({ username }) {
     }
   };
 
-  const navigate = useNavigate();
+  const handleLogout = () => {
+    // Remove the token from local storage
+    localStorage.removeItem("token");
+
+    // Redirect to the login page
+    navigate("/login");
+  };
 
   const goToAddStock = () => {
     navigate("/addstock");
@@ -109,6 +116,7 @@ function Holdings({ username }) {
         <div className="button-group">
           <button className="modern-button" onClick={goToAddStock}>Add Stock</button>
           <button className="modern-button" onClick={goToAddDashboard}>Dashboard</button>
+          <button style={{background : 'red'}} className="modern-button" onClick={handleLogout}>Logout</button>
         </div>
       </header>
 
@@ -132,8 +140,8 @@ function Holdings({ username }) {
               <td>{holding.ticker}</td>
               <td>{holding.date}</td>
               <td>{holding.quantity}</td>
-              <td>{holding.buyPrice}</td>
-              <td>{holding.realtimePrice}</td>
+              <td>{holding.buyPrice.toFixed(2)}</td>
+              <td>{holding.realtimePrice.toFixed(2)}</td>
               <td>{holding.totalValue.toFixed(2)}</td>
               <td>
                 <button
