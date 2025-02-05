@@ -18,7 +18,7 @@ function AddStocks() {
           throw new Error("Authorization token is missing. Please log in.");
         }
 
-        const response = await axios.get(`http://localhost:8080/stocks`, {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/stocks`, {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token
           },
@@ -82,7 +82,7 @@ function AddStocks() {
             buyPrice: buyPrices[uuid],
         };
 
-        const response = await axios.post("http://localhost:8080/holdings", payload, {
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/holdings`, payload, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

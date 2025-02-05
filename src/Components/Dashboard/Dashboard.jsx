@@ -26,7 +26,7 @@ function Dashboard() {
                     return;
                 }
 
-                const response = await axios.get(`http://localhost:8080/user/${username}`, {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/user/${username}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
@@ -60,7 +60,7 @@ function Dashboard() {
         const fetchHoldings = async () => {
             try {
                 const token = localStorage.getItem("token"); // Retrieve token from local storage
-                const response = await axios.get(`http://localhost:8080/holdings/${username}`, {
+                const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/holdings/${username}`, {
                     headers: {
                         Authorization: `Bearer ${token}`, // Include the token
                     },

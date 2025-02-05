@@ -23,7 +23,7 @@ function Holdings({ username }) {
       try {
         const token = localStorage.getItem("token"); // Retrieve token from local storage
         const response = await axios.get(
-          `http://localhost:8080/holdings/${username}`,
+          `${import.meta.env.VITE_REACT_APP_API_URL}/holdings/${username}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Include the token
@@ -42,7 +42,7 @@ function Holdings({ username }) {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token"); // Retrieve token from local storage
-      await axios.delete(`http://localhost:8080/holdings/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/holdings/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Include the token
         },
@@ -64,7 +64,7 @@ function Holdings({ username }) {
     try {
       const token = localStorage.getItem("token"); // Retrieve token from local storage
       const response = await axios.get(
-        `http://localhost:8080/holdings/get-portfolio-value/${username}`,
+        `${import.meta.env.VITE_REACT_APP_API_URL}/holdings/get-portfolio-value/${username}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token

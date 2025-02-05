@@ -47,7 +47,7 @@ function Signup() {
 
         try {
             // Step 1: Signup the user
-            const signupResponse = await axios.post('http://localhost:8080/user/add', {
+            const signupResponse = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/user/add`, {
                 userName: username,
                 password: password,
                 email: email,
